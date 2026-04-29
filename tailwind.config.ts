@@ -39,6 +39,16 @@ export default {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
+        surface: {
+          DEFAULT: "hsl(var(--surface))",
+          elevated: "hsl(var(--surface-elevated))",
+        },
+        neon: {
+          blue: "hsl(var(--neon-blue))",
+          green: "hsl(var(--neon-green))",
+        },
+        hot: "hsl(var(--hot))",
+        gold: "hsl(var(--gold))",
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
@@ -63,6 +73,19 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      fontFamily: {
+        display: ["Poppins", "Inter", "system-ui", "sans-serif"],
+        body: ["Inter", "Poppins", "system-ui", "sans-serif"],
+      },
+      backgroundImage: {
+        "hero-radial": "var(--gradient-hero)",
+        "card-premium": "var(--gradient-card)",
+        "cta-premium": "var(--gradient-cta)",
+      },
+      boxShadow: {
+        glow: "var(--shadow-glow)",
+        whatsapp: "var(--shadow-whatsapp)",
+      },
       keyframes: {
         "accordion-down": {
           from: {
@@ -80,10 +103,25 @@ export default {
             height: "0",
           },
         },
+        float: {
+          "0%, 100%": { transform: "translate3d(0, 0, 0)" },
+          "50%": { transform: "translate3d(0, -12px, 0)" },
+        },
+        pulseGlow: {
+          "0%, 100%": { boxShadow: "0 0 0 0 hsl(var(--neon-green) / 0.45)" },
+          "70%": { boxShadow: "0 0 0 18px hsl(var(--neon-green) / 0)" },
+        },
+        scan: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(100%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        float: "float 5s ease-in-out infinite",
+        "pulse-glow": "pulseGlow 2s ease-out infinite",
+        scan: "scan 3.2s linear infinite",
       },
     },
   },
