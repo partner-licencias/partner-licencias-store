@@ -8,35 +8,47 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 225 35% 6%;
+    --foreground: 210 40% 98%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 226 28% 11%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 226 30% 10%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 200 100% 54%;
+    --primary-foreground: 225 35% 6%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 220 24% 16%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 224 20% 18%;
+    --muted-foreground: 216 18% 72%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 142 72% 49%;
+    --accent-foreground: 225 35% 6%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 220 22% 22%;
+    --input: 220 22% 22%;
+    --ring: 200 100% 54%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
+
+    --surface: 224 30% 9%;
+    --surface-elevated: 224 25% 14%;
+    --neon-blue: 200 100% 54%;
+    --neon-green: 142 72% 49%;
+    --hot: 15 100% 58%;
+    --gold: 45 100% 56%;
+    --gradient-hero: radial-gradient(circle at 20% 20%, hsl(var(--neon-blue) / 0.28), transparent 28%), radial-gradient(circle at 78% 8%, hsl(var(--neon-green) / 0.18), transparent 26%), linear-gradient(135deg, hsl(226 38% 7%) 0%, hsl(224 42% 10%) 50%, hsl(220 38% 7%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(var(--surface-elevated) / 0.96), hsl(var(--surface) / 0.92));
+    --gradient-cta: linear-gradient(135deg, hsl(var(--neon-blue)), hsl(var(--neon-green)));
+    --shadow-glow: 0 24px 80px hsl(var(--neon-blue) / 0.24);
+    --shadow-whatsapp: 0 18px 48px hsl(var(--neon-green) / 0.34);
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +112,26 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-body antialiased;
+  }
+}
+
+@layer utilities {
+  .tech-grid {
+    background-image:
+      linear-gradient(hsl(var(--primary) / 0.11) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--primary) / 0.11) 1px, transparent 1px);
+    background-size: 42px 42px;
+    mask-image: radial-gradient(circle at center, black, transparent 78%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
