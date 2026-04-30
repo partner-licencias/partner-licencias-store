@@ -19,9 +19,7 @@ import {
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { catalogProducts as fallbackProducts, type LicenseType } from "@/data/catalog";
-import { slugifyProduct } from "@/lib/catalog";
-
-const whatsappNumber = "573000000000";
+import { createWhatsappUrl, slugifyProduct } from "@/lib/catalog";
 
 type Product = {
   name: string;
@@ -96,7 +94,7 @@ const ProductDetail = () => {
   }
 
   const Icon = iconByType[product.type] ?? Layers;
-  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`Hola, quiero comprar ${product.name}. ¿Está disponible?`)}`;
+  const whatsappUrl = createWhatsappUrl(product.name, product.price);
 
   return (
     <div className="min-h-screen bg-background font-body text-foreground">
