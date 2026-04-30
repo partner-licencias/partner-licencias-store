@@ -147,9 +147,9 @@ const Index = () => {
                   </div>
                   <Sparkles className="size-7 text-gold" />
                 </div>
-                <Link to="/catalogo" className="mt-5 flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-5 py-3 font-display font-black text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5">
+                <a href={createWhatsappUrl(product.name, product.price)} className="mt-5 flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-5 py-3 font-display font-black text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5">
                   Comprar <MessageCircle className="size-4" />
-                </Link>
+                </a>
               </article>
             ))}
           </div>
