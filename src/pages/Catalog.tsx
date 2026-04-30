@@ -18,6 +18,7 @@ import {
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { catalogProducts as fallbackProducts, licenseTypes, type LicenseType } from "@/data/catalog";
+import { slugifyProduct } from "@/lib/catalog";
 
 const whatsappNumber = "573000000000";
 const allFilter = "Todos";
@@ -156,6 +157,7 @@ const Catalog = () => {
                 const Icon = iconByType[product.type] ?? Layers;
                 return (
                   <article key={`${product.type}-${product.name}`} className="group relative overflow-hidden rounded-[1.35rem] border border-border bg-card-premium p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-primary/60 hover:shadow-glow">
+                    <Link to={`/catalogo/${slugifyProduct(product.name)}`} className="absolute inset-0 z-10" aria-label={`Ver detalle de ${product.name}`} />
                     <div className="mb-5 flex items-start justify-between gap-4">
                       <div className="grid size-20 overflow-hidden rounded-2xl bg-gradient-to-br from-primary/25 to-background font-display text-xl font-black shadow-glow">
                         {product.image ? (
@@ -178,7 +180,7 @@ const Catalog = () => {
                       </div>
                       <Icon className="size-9 text-gold" />
                     </div>
-                    <a href={productMessage(product.name)} className="mt-5 flex w-full items-center justify-center gap-2 rounded-2xl bg-cta-premium px-5 py-3 font-display font-black text-primary-foreground shadow-glow transition-transform duration-300 hover:-translate-y-0.5">
+                    <a href={productMessage(product.name)} className="relative z-20 mt-5 flex w-full items-center justify-center gap-2 rounded-2xl bg-cta-premium px-5 py-3 font-display font-black text-primary-foreground shadow-glow transition-transform duration-300 hover:-translate-y-0.5">
                       Comprar por WhatsApp <MessageCircle className="size-4" />
                     </a>
                   </article>
