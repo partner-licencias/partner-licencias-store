@@ -12,6 +12,7 @@ import {
   Sparkles,
   Zap,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const products = [
   { tag: "HOT", name: "Windows 11 Pro", logo: "W11", old: "$49.990", price: "$19.990", tone: "from-primary/30" },
@@ -76,7 +77,7 @@ const Index = () => {
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <a href="#catalogo" className="rounded-2xl bg-cta-premium px-7 py-4 text-center font-display text-base font-black text-primary-foreground shadow-glow transition-transform duration-300 hover:-translate-y-1">Comprar Ahora</a>
-                <a href="#catalogo" className="rounded-2xl border border-primary/40 bg-secondary/70 px-7 py-4 text-center font-display text-base font-black text-foreground backdrop-blur transition-all duration-300 hover:border-primary hover:bg-primary/10">Ver Catálogo</a>
+                <Link to="/catalogo" className="rounded-2xl border border-primary/40 bg-secondary/70 px-7 py-4 text-center font-display text-base font-black text-foreground backdrop-blur transition-all duration-300 hover:border-primary hover:bg-primary/10">Ver Catálogo</Link>
                 <a href="https://wa.me/573000000000" className="rounded-2xl bg-accent px-7 py-4 text-center font-display text-base font-black text-accent-foreground shadow-whatsapp transition-transform duration-300 hover:-translate-y-1">WhatsApp</a>
               </div>
               <div className="mt-8 grid max-w-xl grid-cols-3 gap-3 text-center">
@@ -145,9 +146,9 @@ const Index = () => {
                   </div>
                   <Sparkles className="size-7 text-gold" />
                 </div>
-                <a href="https://wa.me/573000000000" className="mt-5 flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-5 py-3 font-display font-black text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5">
+                <Link to="/catalogo" className="mt-5 flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-5 py-3 font-display font-black text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5">
                   Comprar <MessageCircle className="size-4" />
-                </a>
+                </Link>
               </article>
             ))}
           </div>
