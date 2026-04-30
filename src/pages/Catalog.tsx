@@ -18,9 +18,8 @@ import {
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { catalogProducts as fallbackProducts, licenseTypes, type LicenseType } from "@/data/catalog";
-import { slugifyProduct } from "@/lib/catalog";
+import { createWhatsappUrl, slugifyProduct } from "@/lib/catalog";
 
-const whatsappNumber = "573000000000";
 const allFilter = "Todos";
 
 type Filter = LicenseType | typeof allFilter;
@@ -84,9 +83,6 @@ const Catalog = () => {
     });
   }, [filter, products, query]);
 
-  const productMessage = (name: string) =>
-    `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`Hola, quiero comprar ${name}. ¿Está disponible?`)}`;
-
   return (
     <div className="min-h-screen bg-background font-body text-foreground">
       <header className="sticky top-0 z-50 border-b border-border/70 bg-background/80 backdrop-blur-xl">
@@ -95,7 +91,7 @@ const Catalog = () => {
             <ArrowLeft className="size-4" /> Inicio
           </Link>
           <div className="text-center font-display text-base font-black sm:text-xl">CATÁLOGO <span className="text-primary">PARTNER LICENCIAS</span></div>
-          <a href={`https://wa.me/${whatsappNumber}`} className="inline-flex items-center gap-2 rounded-2xl bg-accent px-4 py-2 text-sm font-black text-accent-foreground shadow-whatsapp transition-transform hover:-translate-y-0.5">
+          <a href={createWhatsappUrl()} className="inline-flex items-center gap-2 rounded-2xl bg-accent px-4 py-2 text-sm font-black text-accent-foreground shadow-whatsapp transition-transform hover:-translate-y-0.5">
             <MessageCircle className="size-4" /> <span className="hidden sm:inline">WhatsApp</span>
           </a>
         </nav>
@@ -180,7 +176,7 @@ const Catalog = () => {
                       </div>
                       <Icon className="size-9 text-gold" />
                     </div>
-                    <a href={productMessage(product.name)} className="relative z-20 mt-5 flex w-full items-center justify-center gap-2 rounded-2xl bg-cta-premium px-5 py-3 font-display font-black text-primary-foreground shadow-glow transition-transform duration-300 hover:-translate-y-0.5">
+                    <a href={createWhatsappUrl(product.name, product.price)} className="relative z-20 mt-5 flex w-full items-center justify-center gap-2 rounded-2xl bg-cta-premium px-5 py-3 font-display font-black text-primary-foreground shadow-glow transition-transform duration-300 hover:-translate-y-0.5">
                       Comprar por WhatsApp <MessageCircle className="size-4" />
                     </a>
                   </article>
@@ -191,7 +187,7 @@ const Catalog = () => {
         </section>
       </main>
 
-      <a href={`https://wa.me/${whatsappNumber}`} aria-label="Comprar por WhatsApp" className="fixed bottom-5 right-5 z-50 grid size-16 place-items-center rounded-full bg-accent text-accent-foreground shadow-whatsapp animate-pulse-glow transition-transform duration-300 hover:scale-110">
+      <a href={createWhatsappUrl()} aria-label="Comprar por WhatsApp" className="fixed bottom-5 right-5 z-50 grid size-16 place-items-center rounded-full bg-accent text-accent-foreground shadow-whatsapp animate-pulse-glow transition-transform duration-300 hover:scale-110">
         <MessageCircle className="size-8" />
       </a>
     </div>
