@@ -13,6 +13,7 @@ import {
   Zap,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { createWhatsappUrl } from "@/lib/catalog";
 
 const products = [
   { tag: "HOT", name: "Windows 11 Pro", logo: "W11", old: "$49.990", price: "$19.990", tone: "from-primary/30" },
@@ -48,7 +49,7 @@ const Index = () => {
             <a className="transition-colors hover:text-foreground" href="#contacto">Contacto</a>
           </div>
           <div className="flex items-center gap-2">
-            <a href="https://wa.me/573000000000" className="hidden rounded-full bg-accent px-5 py-2.5 text-sm font-black text-accent-foreground shadow-whatsapp transition-transform duration-300 hover:-translate-y-0.5 sm:inline-flex">
+            <a href={createWhatsappUrl()} className="hidden rounded-full bg-accent px-5 py-2.5 text-sm font-black text-accent-foreground shadow-whatsapp transition-transform duration-300 hover:-translate-y-0.5 sm:inline-flex">
               WhatsApp
             </a>
             <button className="grid size-10 place-items-center rounded-xl border border-border bg-secondary md:hidden" aria-label="Abrir menú">
@@ -78,7 +79,7 @@ const Index = () => {
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <a href="#catalogo" className="rounded-2xl bg-cta-premium px-7 py-4 text-center font-display text-base font-black text-primary-foreground shadow-glow transition-transform duration-300 hover:-translate-y-1">Comprar Ahora</a>
                 <Link to="/catalogo" className="rounded-2xl border border-primary/40 bg-secondary/70 px-7 py-4 text-center font-display text-base font-black text-foreground backdrop-blur transition-all duration-300 hover:border-primary hover:bg-primary/10">Ver Catálogo</Link>
-                <a href="https://wa.me/573000000000" className="rounded-2xl bg-accent px-7 py-4 text-center font-display text-base font-black text-accent-foreground shadow-whatsapp transition-transform duration-300 hover:-translate-y-1">WhatsApp</a>
+                <a href={createWhatsappUrl()} className="rounded-2xl bg-accent px-7 py-4 text-center font-display text-base font-black text-accent-foreground shadow-whatsapp transition-transform duration-300 hover:-translate-y-1">WhatsApp</a>
               </div>
               <div className="mt-8 grid max-w-xl grid-cols-3 gap-3 text-center">
                 {[
@@ -127,7 +128,7 @@ const Index = () => {
               <p className="font-display text-sm font-black uppercase tracking-[0.28em] text-primary">Productos destacados</p>
               <h2 className="mt-2 font-display text-4xl font-black sm:text-5xl">Compra, activa y listo.</h2>
             </div>
-            <a href="https://wa.me/573000000000" className="inline-flex items-center justify-center gap-2 rounded-2xl bg-accent px-6 py-3 font-black text-accent-foreground shadow-whatsapp transition-transform duration-300 hover:-translate-y-1">
+            <a href={createWhatsappUrl()} className="inline-flex items-center justify-center gap-2 rounded-2xl bg-accent px-6 py-3 font-black text-accent-foreground shadow-whatsapp transition-transform duration-300 hover:-translate-y-1">
               <MessageCircle className="size-5" /> Cotizar combo
             </a>
           </div>
@@ -181,7 +182,7 @@ const Index = () => {
                 </div>
                 <h2 className="font-display text-4xl font-black sm:text-5xl">Combos digitales con descuento agresivo.</h2>
                 <p className="mt-4 max-w-2xl text-lg leading-8 text-muted-foreground">Arma tu pack de Windows + Office + Antivirus o solicita licencias para empresa con precio preferencial por volumen.</p>
-                <a href="https://wa.me/573000000000" className="mt-7 inline-flex rounded-2xl bg-cta-premium px-7 py-4 font-display font-black text-primary-foreground shadow-glow transition-transform duration-300 hover:-translate-y-1">Quiero mi descuento</a>
+                <a href={createWhatsappUrl()} className="mt-7 inline-flex rounded-2xl bg-cta-premium px-7 py-4 font-display font-black text-primary-foreground shadow-glow transition-transform duration-300 hover:-translate-y-1">Quiero mi descuento</a>
               </div>
               <div className="grid grid-cols-3 gap-3 text-center sm:gap-4">
                 {["02", "14", "39"].map((time, index) => (
@@ -199,7 +200,7 @@ const Index = () => {
           <div className="mx-auto max-w-7xl rounded-[2.2rem] bg-cta-premium p-8 text-center text-primary-foreground shadow-glow sm:p-12">
             <h2 className="font-display text-4xl font-black sm:text-6xl">⚡ ACTIVA TU SOFTWARE HOY MISMO ⚡</h2>
             <p className="mx-auto mt-4 max-w-2xl text-lg font-semibold opacity-90">Escríbenos por WhatsApp, confirma disponibilidad y recibe tu licencia digital con soporte de activación.</p>
-            <a href="https://wa.me/573000000000" className="mt-8 inline-flex items-center justify-center gap-3 rounded-2xl bg-background px-8 py-5 font-display text-lg font-black text-foreground shadow-whatsapp transition-transform duration-300 hover:-translate-y-1">
+            <a href={createWhatsappUrl()} className="mt-8 inline-flex items-center justify-center gap-3 rounded-2xl bg-background px-8 py-5 font-display text-lg font-black text-foreground shadow-whatsapp transition-transform duration-300 hover:-translate-y-1">
               <MessageCircle className="size-6" /> Comprar por WhatsApp
             </a>
           </div>
@@ -219,7 +220,7 @@ const Index = () => {
         </div>
       </footer>
 
-      <a href="https://wa.me/573000000000" aria-label="Comprar por WhatsApp" className="fixed bottom-5 right-5 z-50 grid size-16 place-items-center rounded-full bg-accent text-accent-foreground shadow-whatsapp animate-pulse-glow transition-transform duration-300 hover:scale-110">
+      <a href={createWhatsappUrl()} aria-label="Comprar por WhatsApp" className="fixed bottom-5 right-5 z-50 grid size-16 place-items-center rounded-full bg-accent text-accent-foreground shadow-whatsapp animate-pulse-glow transition-transform duration-300 hover:scale-110">
         <MessageCircle className="size-8" />
       </a>
     </div>
