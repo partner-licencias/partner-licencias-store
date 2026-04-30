@@ -1,25 +1,87 @@
-import { useMemo, useState } from "react";
-import { ArrowLeft, MessageCircle, Search, Sparkles } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import {
+  ArrowLeft,
+  BadgeCheck,
+  Clapperboard,
+  ImageIcon,
+  Layers,
+  Loader2,
+  MessageCircle,
+  MonitorCog,
+  Palette,
+  Search,
+  ShieldCheck,
+  Sparkles,
+  Tv,
+  Wrench,
+} from "lucide-react";
 import { Link } from "react-router-dom";
-import { catalogProducts, licenseTypes, type LicenseType } from "@/data/catalog";
+import { supabase } from "@/integrations/supabase/client";
+import { catalogProducts as fallbackProducts, licenseTypes, type LicenseType } from "@/data/catalog";
 
 const whatsappNumber = "573000000000";
 const allFilter = "Todos";
 
 type Filter = LicenseType | typeof allFilter;
+type SheetProduct = {
+  name: string;
+  type: LicenseType;
+  description: string;
+  price: string;
+  image?: string;
+  oldPrice?: string;
+  badge?: string;
+};
+
+const iconByType = {
+  Windows: MonitorCog,
+  Office: BadgeCheck,
+  Antivirus: ShieldCheck,
+  IPTV: Tv,
+  Adobe: Palette,
+  Autodesk: Wrench,
+  Streaming: Clapperboard,
+};
 
 const Catalog = () => {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Filter>(allFilter);
+  const [products, setProducts] = useState<SheetProduct[]>(fallbackProducts);
+  const [status, setStatus] = useState<"loading" | "ready" | "fallback">("loading");
+
+  useEffect(() => {
+    let mounted = true;
+
+    const loadCatalog = async () => {
+      const { data, error } = await supabase.functions.invoke<{ products: SheetProduct[] }>("catalog-from-sheets");
+
+      if (!mounted) return;
+
+      if (error || !data?.products?.length) {
+        setProducts(fallbackProducts);
+        setStatus("fallback");
+        return;
+      }
+
+      setProducts(data.products);
+      setStatus("ready");
+    };
+
+    loadCatalog();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const filteredProducts = useMemo(() => {
     const term = query.trim().toLowerCase();
-    return catalogProducts.filter((product) => {
+    return products.filter((product) => {
       const matchesType = filter === allFilter || product.type === filter;
       const matchesSearch = !term || `${product.name} ${product.description} ${product.type}`.toLowerCase().includes(term);
       return matchesType && matchesSearch;
     });
-  }, [filter, query]);
+  }, [filter, products, query]);
 
   const productMessage = (name: string) =>
     `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`Hola, quiero comprar ${name}. ¿Está disponible?`)}`;
@@ -81,22 +143,29 @@ const Catalog = () => {
           </div>
 
           <div className="mb-4 flex items-center justify-between gap-3 text-sm font-bold text-muted-foreground">
-            <span>{filteredProducts.length} productos encontrados</span>
-            <span className="hidden sm:inline">Scroll para ver todo el catálogo</span>
+            <span className="inline-flex items-center gap-2">
+              {status === "loading" && <Loader2 className="size-4 animate-spin" />}
+              {filteredProducts.length} productos encontrados
+            </span>
+            <span className="hidden sm:inline">{status === "ready" ? "Sincronizado con Google Sheets" : "Scroll para ver todo el catálogo"}</span>
           </div>
 
           <div className="max-h-[68vh] overflow-y-auto pr-1 sm:pr-2">
             <div className="grid gap-5 pb-24 sm:grid-cols-2 lg:grid-cols-3">
               {filteredProducts.map((product) => {
-                const Icon = product.icon;
+                const Icon = iconByType[product.type] ?? Layers;
                 return (
-                  <article key={product.name} className="group relative overflow-hidden rounded-[1.35rem] border border-border bg-card-premium p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-primary/60 hover:shadow-glow">
+                  <article key={`${product.type}-${product.name}`} className="group relative overflow-hidden rounded-[1.35rem] border border-border bg-card-premium p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-primary/60 hover:shadow-glow">
                     <div className="mb-5 flex items-start justify-between gap-4">
-                      <div className="grid size-20 place-items-center rounded-2xl bg-gradient-to-br from-primary/25 to-background font-display text-xl font-black shadow-glow">
-                        {product.logo}
+                      <div className="grid size-20 overflow-hidden rounded-2xl bg-gradient-to-br from-primary/25 to-background font-display text-xl font-black shadow-glow">
+                        {product.image ? (
+                          <img src={product.image} alt={product.name} className="h-full w-full object-cover" loading="lazy" />
+                        ) : (
+                          <div className="grid h-full w-full place-items-center"><ImageIcon className="size-8 text-primary" /></div>
+                        )}
                       </div>
                       <div className="flex flex-col items-end gap-2">
-                        <span className="rounded-full bg-hot px-3 py-1 text-xs font-black text-destructive-foreground">{product.badge}</span>
+                        <span className="rounded-full bg-hot px-3 py-1 text-xs font-black text-destructive-foreground">{product.badge || "Digital"}</span>
                         <span className="inline-flex items-center gap-1 rounded-full border border-border bg-background/60 px-3 py-1 text-xs font-black text-primary"><Icon className="size-3.5" /> {product.type}</span>
                       </div>
                     </div>
