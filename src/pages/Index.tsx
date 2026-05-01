@@ -242,9 +242,12 @@ const Index = () => {
 
       <footer className="border-t border-border bg-surface px-4 py-8 sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-5 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between">
-          <div>
-            <p className="font-display text-lg font-black text-foreground">PARTNER <span className="text-primary">LICENCIAS</span></p>
-            <p>Licencias digitales, software, streaming y activaciones online.</p>
+          <div className="flex items-center gap-3">
+            <img src={logoPartner} alt="Partner Licencias" width={48} height={48} className="size-12 object-contain" loading="lazy" />
+            <div>
+              <p className="font-display text-lg font-black text-foreground">PARTNER <span className="text-primary">LICENCIAS</span></p>
+              <p>Licencias digitales, software, streaming y activaciones online.</p>
+            </div>
           </div>
           <div className="flex flex-wrap gap-3 font-semibold">
             <span>WhatsApp</span><span>Instagram</span><span>TikTok</span><span>Visa</span><span>Mastercard</span><span>Transferencia</span>
