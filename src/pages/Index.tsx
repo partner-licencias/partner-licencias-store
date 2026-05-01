@@ -137,8 +137,8 @@ const Index = () => {
                       to={`/catalogo/${product.slug}`}
                       className="rounded-2xl border border-border bg-secondary/70 p-4 transition-transform duration-300 hover:-translate-y-1"
                     >
-                      <div className={`mb-4 grid aspect-square place-items-center rounded-2xl bg-gradient-to-br ${product.tone} to-background text-primary`}>
-                        <product.Icon className="size-10" />
+                      <div className={`mb-4 overflow-hidden rounded-2xl bg-gradient-to-br ${product.tone} to-background`}>
+                        <img src={getProductImage(product.category)} alt={product.name} loading="lazy" width={400} height={400} className="aspect-square w-full object-cover" />
                       </div>
                       <p className="line-clamp-1 text-sm font-black">{product.name}</p>
                       <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{product.duration}</p>
@@ -168,8 +168,8 @@ const Index = () => {
                 {product.badge && (
                   <div className="absolute right-4 top-4 rounded-full bg-hot px-3 py-1 text-xs font-black text-destructive-foreground">{product.badge}</div>
                 )}
-                <div className={`mb-5 grid aspect-[1.45] place-items-center rounded-2xl bg-gradient-to-br ${product.tone} to-background text-primary transition-transform duration-300 group-hover:scale-[1.02]`}>
-                  <product.Icon className="size-20" />
+                <div className={`mb-5 overflow-hidden rounded-2xl bg-gradient-to-br ${product.tone} to-background transition-transform duration-300 group-hover:scale-[1.02]`}>
+                  <img src={getProductImage(product.category)} alt={product.name} loading="lazy" width={768} height={530} className="aspect-[1.45] w-full object-cover" />
                 </div>
                 <h3 className="font-display text-2xl font-black">{product.name}</h3>
                 <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted-foreground">{product.description}</p>
