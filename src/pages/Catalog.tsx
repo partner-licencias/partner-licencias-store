@@ -1,5 +1,16 @@
 import { useMemo, useState } from "react";
-import { ArrowLeft, KeyRound, Layers, MessageCircle, Search, Sparkles, Zap } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowUpDown,
+  KeyRound,
+  Layers,
+  MessageCircle,
+  Search,
+  SlidersHorizontal,
+  Sparkles,
+  X,
+  Zap,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   catalogProducts,
@@ -8,22 +19,39 @@ import {
   type LicenseCategory,
 } from "@/data/catalog";
 import { createWhatsappUrl, slugifyProduct } from "@/lib/catalog";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const allFilter = "Todos";
 type Filter = LicenseCategory | typeof allFilter;
 
+type SortKey = "relevance" | "price-asc" | "price-desc" | "name-asc";
+
+const sortOptions: { value: SortKey; label: string }[] = [
+  { value: "relevance", label: "Relevancia" },
+  { value: "price-asc", label: "Precio: menor a mayor" },
+  { value: "price-desc", label: "Precio: mayor a menor" },
+  { value: "name-asc", label: "Nombre A-Z" },
+];
+
 const Catalog = () => {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Filter>(allFilter);
-
-  const filteredProducts = useMemo(() => {
-    const term = query.trim().toLowerCase();
-    return catalogProducts.filter((product) => {
-      const matchesCategory = filter === allFilter || product.category === filter;
-      const haystack = `${product.name} ${product.description} ${product.category} ${product.duration}`.toLowerCase();
-      return matchesCategory && (!term || haystack.includes(term));
-    });
-  }, [filter, query]);
+  const [sort, setSort] = useState<SortKey>("relevance");
+  const [onlyOffers, setOnlyOffers] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const categoryCounts = useMemo(() => {
     const map = new Map<string, number>();
@@ -33,22 +61,92 @@ const Catalog = () => {
     return map;
   }, []);
 
+  const filteredProducts = useMemo(() => {
+    const term = query.trim().toLowerCase();
+    const tokens = term ? term.split(/\s+/).filter(Boolean) : [];
+    const list = catalogProducts.filter((product) => {
+      if (filter !== allFilter && product.category !== filter) return false;
+      if (onlyOffers && !product.badge) return false;
+      if (tokens.length === 0) return true;
+      const haystack =
+        `${product.name} ${product.description} ${product.category} ${product.duration} ${product.activation} ${product.format}`.toLowerCase();
+      return tokens.every((t) => haystack.includes(t));
+    });
+
+    const sorted = [...list];
+    switch (sort) {
+      case "price-asc":
+        sorted.sort((a, b) => a.priceValue - b.priceValue);
+        break;
+      case "price-desc":
+        sorted.sort((a, b) => b.priceValue - a.priceValue);
+        break;
+      case "name-asc":
+        sorted.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+    }
+    return sorted;
+  }, [filter, query, sort, onlyOffers]);
+
+  const activeFiltersCount =
+    (filter !== allFilter ? 1 : 0) + (onlyOffers ? 1 : 0) + (sort !== "relevance" ? 1 : 0);
+
+  const resetFilters = () => {
+    setFilter(allFilter);
+    setSort("relevance");
+    setOnlyOffers(false);
+    setQuery("");
+  };
+
+  const CategoryChips = ({ onPick }: { onPick?: () => void }) => (
+    <div className="flex flex-wrap gap-2">
+      {[allFilter, ...licenseCategories].map((category) => {
+        const isActive = filter === category;
+        const count =
+          category === allFilter ? catalogProducts.length : categoryCounts.get(category) ?? 0;
+        return (
+          <button
+            key={category}
+            onClick={() => {
+              setFilter(category as Filter);
+              onPick?.();
+            }}
+            className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-black transition-all sm:text-sm ${
+              isActive
+                ? "border-primary bg-primary text-primary-foreground shadow-glow"
+                : "border-border bg-secondary/70 text-muted-foreground hover:border-primary/60 hover:text-foreground"
+            }`}
+          >
+            <span className="truncate max-w-[140px]">{category}</span>
+            <span
+              className={`rounded-full px-1.5 py-0.5 text-[10px] font-black tracking-wider ${
+                isActive ? "bg-background/20" : "bg-background/40"
+              }`}
+            >
+              {count}
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-background font-body text-foreground">
       <header className="sticky top-0 z-50 border-b border-border/70 bg-background/80 backdrop-blur-xl">
         <nav className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 rounded-2xl border border-border bg-secondary/70 px-4 py-2 text-sm font-black transition-colors hover:border-primary/60"
+            className="inline-flex items-center gap-2 rounded-2xl border border-border bg-secondary/70 px-3 py-2 text-sm font-black transition-colors hover:border-primary/60 sm:px-4"
           >
-            <ArrowLeft className="size-4" /> Inicio
+            <ArrowLeft className="size-4" /> <span className="hidden sm:inline">Inicio</span>
           </Link>
-          <div className="text-center font-display text-base font-black sm:text-xl">
+          <div className="text-center font-display text-sm font-black sm:text-xl">
             CATÁLOGO <span className="text-primary">PARTNER LICENCIAS</span>
           </div>
           <a
             href={createWhatsappUrl()}
-            className="inline-flex items-center gap-2 rounded-2xl bg-accent px-4 py-2 text-sm font-black text-accent-foreground shadow-whatsapp transition-transform hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 rounded-2xl bg-accent px-3 py-2 text-sm font-black text-accent-foreground shadow-whatsapp transition-transform hover:-translate-y-0.5 sm:px-4"
           >
             <MessageCircle className="size-4" /> <span className="hidden sm:inline">WhatsApp</span>
           </a>
@@ -57,64 +155,125 @@ const Catalog = () => {
 
       <main className="relative overflow-hidden bg-hero-radial">
         <div className="pointer-events-none absolute inset-0 tech-grid opacity-40" />
-        <section className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-          <div className="mb-8 grid gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
-            <div>
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-2 text-sm font-black text-primary shadow-glow">
-                <Sparkles className="size-4" /> {catalogProducts.length} licencias disponibles
-              </div>
-              <h1 className="font-display text-4xl font-black leading-tight sm:text-6xl">
-                Encuentra tu licencia y compra en minutos.
-              </h1>
-              <p className="mt-4 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
-                Software original, activación rápida y atención directa por WhatsApp para todo el catálogo Partner Licencias.
-              </p>
+        <section className="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
+          <div className="mb-6 sm:mb-8">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1.5 text-xs font-black text-primary shadow-glow sm:px-4 sm:py-2 sm:text-sm">
+              <Sparkles className="size-4" /> {catalogProducts.length} licencias disponibles
             </div>
+            <h1 className="font-display text-3xl font-black leading-tight sm:text-5xl lg:text-6xl">
+              Encuentra tu licencia y compra en minutos.
+            </h1>
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-lg sm:leading-7">
+              Software original, activación rápida y atención directa por WhatsApp para todo el catálogo Partner Licencias.
+            </p>
+          </div>
 
-            <div className="rounded-[1.4rem] border border-border bg-card-premium p-4 shadow-glow">
-              <label className="relative block">
+          {/* Barra de búsqueda + controles */}
+          <div className="rounded-[1.4rem] border border-border bg-card-premium p-3 shadow-glow sm:p-4">
+            <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
+              <label className="relative block flex-1">
                 <Search className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-muted-foreground" />
                 <input
                   value={query}
                   onChange={(event) => setQuery(event.target.value)}
                   placeholder="Buscar Windows, Office, Adobe, AutoCAD..."
-                  className="h-14 w-full rounded-2xl border border-input bg-background/70 px-12 font-semibold text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary"
+                  className="h-12 w-full rounded-2xl border border-input bg-background/70 pl-12 pr-12 font-semibold text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary sm:h-14"
                 />
+                {query && (
+                  <button
+                    onClick={() => setQuery("")}
+                    aria-label="Limpiar búsqueda"
+                    className="absolute right-3 top-1/2 grid size-7 -translate-y-1/2 place-items-center rounded-full bg-secondary text-muted-foreground hover:text-foreground"
+                  >
+                    <X className="size-4" />
+                  </button>
+                )}
               </label>
-              <div className="mt-4 overflow-x-auto pb-1">
-                <div className="flex min-w-max gap-2">
-                  {[allFilter, ...licenseCategories].map((category) => {
-                    const isActive = filter === category;
-                    const count =
-                      category === allFilter ? catalogProducts.length : categoryCounts.get(category) ?? 0;
-                    return (
-                      <button
-                        key={category}
-                        onClick={() => setFilter(category as Filter)}
-                        className={`rounded-full border px-4 py-2 text-sm font-black transition-all ${
-                          isActive
-                            ? "border-primary bg-primary text-primary-foreground shadow-glow"
-                            : "border-border bg-secondary/70 text-muted-foreground hover:border-primary/60 hover:text-foreground"
-                        }`}
-                      >
-                        {category}
-                        <span className="ml-2 rounded-full bg-background/30 px-2 py-0.5 text-[10px] font-black tracking-wider">
-                          {count}
+
+              <div className="flex flex-wrap items-center gap-2">
+                <Select value={sort} onValueChange={(v) => setSort(v as SortKey)}>
+                  <SelectTrigger className="h-12 w-[180px] rounded-2xl border-border bg-background/70 font-bold sm:h-12">
+                    <ArrowUpDown className="mr-2 size-4 text-primary" />
+                    <SelectValue placeholder="Ordenar" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {sortOptions.map((opt) => (
+                      <SelectItem key={opt.value} value={opt.value}>
+                        {opt.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <button
+                  onClick={() => setOnlyOffers((v) => !v)}
+                  className={`h-12 rounded-2xl border px-4 text-sm font-black transition-all ${
+                    onlyOffers
+                      ? "border-hot bg-hot text-destructive-foreground shadow-glow"
+                      : "border-border bg-background/70 text-muted-foreground hover:border-primary/60 hover:text-foreground"
+                  }`}
+                >
+                  🔥 Ofertas
+                </button>
+
+                <Sheet open={filtersOpen} onOpenChange={setFiltersOpen}>
+                  <SheetTrigger asChild>
+                    <button className="relative inline-flex h-12 items-center gap-2 rounded-2xl border border-border bg-background/70 px-4 text-sm font-black text-muted-foreground hover:border-primary/60 hover:text-foreground lg:hidden">
+                      <SlidersHorizontal className="size-4" /> Filtros
+                      {activeFiltersCount > 0 && (
+                        <span className="grid size-5 place-items-center rounded-full bg-primary text-[10px] font-black text-primary-foreground">
+                          {activeFiltersCount}
                         </span>
-                      </button>
-                    );
-                  })}
-                </div>
+                      )}
+                    </button>
+                  </SheetTrigger>
+                  <SheetContent side="bottom" className="max-h-[85vh] overflow-y-auto rounded-t-3xl">
+                    <SheetHeader className="text-left">
+                      <SheetTitle className="font-display text-2xl font-black">
+                        Filtrar por categoría
+                      </SheetTitle>
+                    </SheetHeader>
+                    <div className="mt-5">
+                      <CategoryChips onPick={() => setFiltersOpen(false)} />
+                    </div>
+                    <button
+                      onClick={() => {
+                        resetFilters();
+                        setFiltersOpen(false);
+                      }}
+                      className="mt-6 w-full rounded-2xl border border-border bg-secondary py-3 font-black text-muted-foreground hover:text-foreground"
+                    >
+                      Limpiar filtros
+                    </button>
+                  </SheetContent>
+                </Sheet>
               </div>
+            </div>
+
+            {/* Chips de categoría: visibles en desktop, plegados en móvil */}
+            <div className="mt-4 hidden lg:block">
+              <CategoryChips />
             </div>
           </div>
 
-          <div className="mb-4 flex items-center justify-between gap-3 text-sm font-bold text-muted-foreground">
-            <span>{filteredProducts.length} productos encontrados</span>
-            <span className="hidden sm:inline">Scroll para ver todo el catálogo</span>
+          {/* Resumen + botón limpiar */}
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm font-bold text-muted-foreground">
+            <span>
+              <span className="text-primary">{filteredProducts.length}</span> de {catalogProducts.length} productos
+              {filter !== allFilter && <span> · {filter}</span>}
+              {onlyOffers && <span> · solo ofertas</span>}
+            </span>
+            {activeFiltersCount > 0 && (
+              <button
+                onClick={resetFilters}
+                className="inline-flex items-center gap-1 rounded-full border border-border bg-secondary/70 px-3 py-1 text-xs font-black hover:border-primary/60 hover:text-foreground"
+              >
+                <X className="size-3" /> Limpiar filtros ({activeFiltersCount})
+              </button>
+            )}
           </div>
 
-          <div className="grid gap-5 pb-24 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-5 grid gap-5 pb-24 sm:grid-cols-2 lg:grid-cols-3">
             {filteredProducts.map((product) => {
               const Icon = categoryIcons[product.category] ?? Layers;
               const slug = slugifyProduct(`${product.name}-${product.duration}`);
@@ -179,14 +338,22 @@ const Catalog = () => {
             <div className="mx-auto max-w-xl rounded-2xl border border-border bg-card-premium p-8 text-center shadow-glow">
               <p className="font-display text-2xl font-black">Sin resultados</p>
               <p className="mt-2 text-muted-foreground">
-                Prueba con otra búsqueda o pídenos tu licencia directamente por WhatsApp.
+                Prueba con otra búsqueda, ajusta los filtros o pídenos tu licencia directamente por WhatsApp.
               </p>
-              <a
-                href={createWhatsappUrl()}
-                className="mt-5 inline-flex items-center gap-2 rounded-2xl bg-accent px-5 py-3 font-black text-accent-foreground shadow-whatsapp"
-              >
-                <MessageCircle className="size-4" /> Consultar disponibilidad
-              </a>
+              <div className="mt-5 flex flex-wrap justify-center gap-3">
+                <button
+                  onClick={resetFilters}
+                  className="inline-flex items-center gap-2 rounded-2xl border border-border bg-secondary px-5 py-3 font-black hover:border-primary/60"
+                >
+                  <X className="size-4" /> Limpiar filtros
+                </button>
+                <a
+                  href={createWhatsappUrl()}
+                  className="inline-flex items-center gap-2 rounded-2xl bg-accent px-5 py-3 font-black text-accent-foreground shadow-whatsapp"
+                >
+                  <MessageCircle className="size-4" /> Consultar disponibilidad
+                </a>
+              </div>
             </div>
           )}
         </section>
