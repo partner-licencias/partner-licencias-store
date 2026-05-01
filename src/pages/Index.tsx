@@ -64,7 +64,7 @@ const Index = () => {
       <header className="sticky top-0 z-50 border-b border-border/70 bg-background/75 backdrop-blur-xl">
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           <a href="#inicio" className="group flex items-center gap-3" aria-label="Partner Licencias inicio">
-            <span className="grid size-11 place-items-center rounded-xl bg-cta-premium font-display text-lg font-black text-primary-foreground shadow-glow transition-transform duration-300 group-hover:scale-105">PL</span>
+            <img src={logoPartner} alt="Partner Licencias logo" width={48} height={48} className="size-12 object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-[0_0_12px_hsl(var(--primary)/0.45)]" />
             <span className="font-display text-lg font-extrabold tracking-wide">PARTNER <span className="text-primary">LICENCIAS</span></span>
           </a>
           <div className="hidden items-center gap-7 text-sm font-semibold text-muted-foreground md:flex">
