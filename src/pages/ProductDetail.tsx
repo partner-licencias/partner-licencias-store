@@ -10,7 +10,9 @@ import {
   Zap,
 } from "lucide-react";
 import { catalogProducts, categoryIcons } from "@/data/catalog";
+import { getProductImage } from "@/data/categoryImages";
 import { createWhatsappUrl, slugifyProduct } from "@/lib/catalog";
+import logoPartner from "@/assets/logo-partner-licencias.png";
 
 const benefits = [
   "Entrega digital inmediata",
@@ -65,9 +67,12 @@ const ProductDetail = () => {
           >
             <ArrowLeft className="size-4" /> Catálogo
           </Link>
-          <div className="text-center font-display text-base font-black sm:text-xl">
-            DETALLE <span className="text-primary">PRODUCTO</span>
-          </div>
+          <Link to="/" className="flex items-center gap-2">
+            <img src={logoPartner} alt="Partner Licencias" width={40} height={40} className="size-10 object-contain" />
+            <span className="hidden font-display text-base font-black sm:inline sm:text-xl">
+              PARTNER <span className="text-primary">LICENCIAS</span>
+            </span>
+          </Link>
           <a
             href={whatsappUrl}
             className="inline-flex items-center gap-2 rounded-2xl bg-accent px-4 py-2 text-sm font-black text-accent-foreground shadow-whatsapp transition-transform hover:-translate-y-0.5"
@@ -81,9 +86,17 @@ const ProductDetail = () => {
         <div className="pointer-events-none absolute inset-0 tech-grid opacity-40" />
         <section className="relative mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8 lg:py-14">
           <div className="rounded-[2rem] border border-border bg-card-premium p-5 shadow-glow">
-            <div className="grid aspect-square place-items-center rounded-[1.5rem] bg-gradient-to-br from-primary/25 to-background">
-              <div className="grid size-40 place-items-center rounded-[2rem] border border-primary/30 bg-primary/10 text-primary shadow-glow">
-                <Icon className="size-20" />
+            <div className="relative overflow-hidden rounded-[1.5rem] bg-gradient-to-br from-primary/25 to-background">
+              <img
+                src={getProductImage(product.category)}
+                alt={`${product.category} - ${product.name}`}
+                width={768}
+                height={768}
+                className="aspect-square w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
+              <div className="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-background/80 px-4 py-2 text-sm font-black text-primary backdrop-blur shadow-glow">
+                <Icon className="size-4" /> {product.category}
               </div>
             </div>
           </div>

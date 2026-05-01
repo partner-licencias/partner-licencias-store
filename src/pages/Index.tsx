@@ -15,6 +15,8 @@ import {
 import { Link } from "react-router-dom";
 import { createWhatsappUrl, slugifyProduct } from "@/lib/catalog";
 import { catalogProducts, categoryIcons } from "@/data/catalog";
+import { getProductImage } from "@/data/categoryImages";
+import logoPartner from "@/assets/logo-partner-licencias.png";
 
 const featuredNames = [
   "Windows 11 Profesional OEM",
@@ -62,7 +64,7 @@ const Index = () => {
       <header className="sticky top-0 z-50 border-b border-border/70 bg-background/75 backdrop-blur-xl">
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           <a href="#inicio" className="group flex items-center gap-3" aria-label="Partner Licencias inicio">
-            <span className="grid size-11 place-items-center rounded-xl bg-cta-premium font-display text-lg font-black text-primary-foreground shadow-glow transition-transform duration-300 group-hover:scale-105">PL</span>
+            <img src={logoPartner} alt="Partner Licencias logo" width={48} height={48} className="size-12 object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-[0_0_12px_hsl(var(--primary)/0.45)]" />
             <span className="font-display text-lg font-extrabold tracking-wide">PARTNER <span className="text-primary">LICENCIAS</span></span>
           </a>
           <div className="hidden items-center gap-7 text-sm font-semibold text-muted-foreground md:flex">
@@ -135,8 +137,8 @@ const Index = () => {
                       to={`/catalogo/${product.slug}`}
                       className="rounded-2xl border border-border bg-secondary/70 p-4 transition-transform duration-300 hover:-translate-y-1"
                     >
-                      <div className={`mb-4 grid aspect-square place-items-center rounded-2xl bg-gradient-to-br ${product.tone} to-background text-primary`}>
-                        <product.Icon className="size-10" />
+                      <div className={`mb-4 overflow-hidden rounded-2xl bg-gradient-to-br ${product.tone} to-background`}>
+                        <img src={getProductImage(product.category)} alt={product.name} loading="lazy" width={400} height={400} className="aspect-square w-full object-cover" />
                       </div>
                       <p className="line-clamp-1 text-sm font-black">{product.name}</p>
                       <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{product.duration}</p>
@@ -166,8 +168,8 @@ const Index = () => {
                 {product.badge && (
                   <div className="absolute right-4 top-4 rounded-full bg-hot px-3 py-1 text-xs font-black text-destructive-foreground">{product.badge}</div>
                 )}
-                <div className={`mb-5 grid aspect-[1.45] place-items-center rounded-2xl bg-gradient-to-br ${product.tone} to-background text-primary transition-transform duration-300 group-hover:scale-[1.02]`}>
-                  <product.Icon className="size-20" />
+                <div className={`mb-5 overflow-hidden rounded-2xl bg-gradient-to-br ${product.tone} to-background transition-transform duration-300 group-hover:scale-[1.02]`}>
+                  <img src={getProductImage(product.category)} alt={product.name} loading="lazy" width={768} height={530} className="aspect-[1.45] w-full object-cover" />
                 </div>
                 <h3 className="font-display text-2xl font-black">{product.name}</h3>
                 <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted-foreground">{product.description}</p>
@@ -240,9 +242,12 @@ const Index = () => {
 
       <footer className="border-t border-border bg-surface px-4 py-8 sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-5 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between">
-          <div>
-            <p className="font-display text-lg font-black text-foreground">PARTNER <span className="text-primary">LICENCIAS</span></p>
-            <p>Licencias digitales, software, streaming y activaciones online.</p>
+          <div className="flex items-center gap-3">
+            <img src={logoPartner} alt="Partner Licencias" width={48} height={48} className="size-12 object-contain" loading="lazy" />
+            <div>
+              <p className="font-display text-lg font-black text-foreground">PARTNER <span className="text-primary">LICENCIAS</span></p>
+              <p>Licencias digitales, software, streaming y activaciones online.</p>
+            </div>
           </div>
           <div className="flex flex-wrap gap-3 font-semibold">
             <span>WhatsApp</span><span>Instagram</span><span>TikTok</span><span>Visa</span><span>Mastercard</span><span>Transferencia</span>
