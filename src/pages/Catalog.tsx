@@ -290,20 +290,24 @@ const Catalog = () => {
                     className="absolute inset-0 z-10"
                     aria-label={`Ver detalle de ${product.name}`}
                   />
-                  <div className="mb-5 flex items-start justify-between gap-4">
-                    <div className="grid size-20 place-items-center overflow-hidden rounded-2xl bg-gradient-to-br from-primary/25 to-background shadow-glow">
-                      <Icon className="size-9 text-primary" />
+                  <div className="relative mb-5 overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-br from-primary/15 to-background">
+                    <img
+                      src={getProductImage(product.category)}
+                      alt={`${product.category} - ${product.name}`}
+                      loading="lazy"
+                      width={768}
+                      height={768}
+                      className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/10 to-transparent" />
+                    <div className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full border border-border bg-background/80 px-3 py-1 text-xs font-black text-primary backdrop-blur">
+                      <Icon className="size-3.5" /> {product.category}
                     </div>
-                    <div className="flex flex-col items-end gap-2">
-                      {product.badge && (
-                        <span className="rounded-full bg-hot px-3 py-1 text-xs font-black text-destructive-foreground">
-                          {product.badge}
-                        </span>
-                      )}
-                      <span className="inline-flex items-center gap-1 rounded-full border border-border bg-background/60 px-3 py-1 text-xs font-black text-primary">
-                        <Icon className="size-3.5" /> {product.category}
+                    {product.badge && (
+                      <span className="absolute right-3 top-3 rounded-full bg-hot px-3 py-1 text-xs font-black text-destructive-foreground shadow-glow">
+                        {product.badge}
                       </span>
-                    </div>
+                    )}
                   </div>
                   <h2 className="font-display text-xl font-black leading-tight">{product.name}</h2>
                   <p className="mt-3 line-clamp-3 min-h-16 text-sm leading-6 text-muted-foreground">
