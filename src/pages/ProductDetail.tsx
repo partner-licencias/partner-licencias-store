@@ -10,7 +10,9 @@ import {
   Zap,
 } from "lucide-react";
 import { catalogProducts, categoryIcons } from "@/data/catalog";
+import { getProductImage } from "@/data/categoryImages";
 import { createWhatsappUrl, slugifyProduct } from "@/lib/catalog";
+import logoPartner from "@/assets/logo-partner-licencias.png";
 
 const benefits = [
   "Entrega digital inmediata",
