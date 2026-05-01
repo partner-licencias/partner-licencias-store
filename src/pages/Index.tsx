@@ -13,16 +13,39 @@ import {
   Zap,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { createWhatsappUrl } from "@/lib/catalog";
+import { createWhatsappUrl, slugifyProduct } from "@/lib/catalog";
+import { catalogProducts, categoryIcons } from "@/data/catalog";
 
-const products = [
-  { tag: "HOT", name: "Windows 11 Pro", logo: "W11", old: "$49.990", price: "$19.990", tone: "from-primary/30" },
-  { tag: "OFERTA", name: "Office 2024 Pro", logo: "365", old: "$59.990", price: "$24.990", tone: "from-accent/25" },
-  { tag: "-60%", name: "ESET Internet Security", logo: "ESET", old: "$39.990", price: "$15.990", tone: "from-neon-green/25" },
-  { tag: "TOP", name: "IPTV Premium", logo: "TV", old: "$29.990", price: "$12.990", tone: "from-hot/25" },
-  { tag: "PRO", name: "Adobe Creative Cloud", logo: "AD", old: "$89.990", price: "$34.990", tone: "from-gold/25" },
-  { tag: "BUNDLE", name: "Autodesk Pack", logo: "AUTO", old: "$99.990", price: "$39.990", tone: "from-primary/25" },
+const featuredNames = [
+  "Windows 11 Profesional OEM",
+  "Microsoft Office 2024 Profesional Plus",
+  "Adobe Creative Cloud",
+  "AutoDesk Suite",
+  "McAfee Total Protection",
+  "Canva Pro Premium",
 ];
+
+const tones = [
+  "from-primary/30",
+  "from-accent/25",
+  "from-gold/25",
+  "from-primary/25",
+  "from-neon-green/25",
+  "from-hot/25",
+];
+
+const products = featuredNames
+  .map((name, index) => {
+    const item = catalogProducts.find((product) => product.name === name);
+    if (!item) return null;
+    return {
+      ...item,
+      tone: tones[index % tones.length],
+      slug: slugifyProduct(`${item.name}-${item.duration}`),
+      Icon: categoryIcons[item.category],
+    };
+  })
+  .filter((item): item is NonNullable<typeof item> => item !== null);
 
 const benefits = [
   { icon: DownloadCloud, title: "Entrega inmediata", text: "Recibe tu licencia digital en minutos." },
