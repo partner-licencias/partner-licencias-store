@@ -130,14 +130,18 @@ const Index = () => {
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   {products.slice(0, 4).map((product) => (
-                    <div key={product.name} className="rounded-2xl border border-border bg-secondary/70 p-4 transition-transform duration-300 hover:-translate-y-1">
-                      <div className={`mb-4 grid aspect-square place-items-center rounded-2xl bg-gradient-to-br ${product.tone} to-background font-display text-2xl font-black text-foreground`}>
-                        {product.logo}
+                    <Link
+                      key={product.name}
+                      to={`/catalogo/${product.slug}`}
+                      className="rounded-2xl border border-border bg-secondary/70 p-4 transition-transform duration-300 hover:-translate-y-1"
+                    >
+                      <div className={`mb-4 grid aspect-square place-items-center rounded-2xl bg-gradient-to-br ${product.tone} to-background text-primary`}>
+                        <product.Icon className="size-10" />
                       </div>
                       <p className="line-clamp-1 text-sm font-black">{product.name}</p>
-                      <p className="text-xs text-muted-foreground line-through">{product.old}</p>
+                      <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{product.duration}</p>
                       <p className="font-display text-xl font-black text-accent">{product.price}</p>
-                    </div>
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -158,19 +162,23 @@ const Index = () => {
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {products.map((product) => (
               <article key={product.name} className="group relative overflow-hidden rounded-[1.4rem] border border-border bg-card-premium p-5 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:border-primary/60 hover:shadow-glow">
-                <div className="absolute right-4 top-4 rounded-full bg-hot px-3 py-1 text-xs font-black text-destructive-foreground">{product.tag}</div>
-                <div className={`mb-5 grid aspect-[1.45] place-items-center rounded-2xl bg-gradient-to-br ${product.tone} to-background transition-transform duration-300 group-hover:scale-[1.02]`}>
-                  <span className="font-display text-5xl font-black text-foreground drop-shadow-lg">{product.logo}</span>
+                <Link to={`/catalogo/${product.slug}`} className="absolute inset-0 z-10" aria-label={`Ver ${product.name}`} />
+                {product.badge && (
+                  <div className="absolute right-4 top-4 rounded-full bg-hot px-3 py-1 text-xs font-black text-destructive-foreground">{product.badge}</div>
+                )}
+                <div className={`mb-5 grid aspect-[1.45] place-items-center rounded-2xl bg-gradient-to-br ${product.tone} to-background text-primary transition-transform duration-300 group-hover:scale-[1.02]`}>
+                  <product.Icon className="size-20" />
                 </div>
                 <h3 className="font-display text-2xl font-black">{product.name}</h3>
-                <div className="mt-3 flex items-end justify-between gap-4">
+                <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted-foreground">{product.description}</p>
+                <div className="mt-4 flex items-end justify-between gap-4">
                   <div>
-                    <p className="text-sm font-semibold text-muted-foreground line-through">Antes {product.old}</p>
+                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{product.duration}</p>
                     <p className="font-display text-4xl font-black text-accent">{product.price}</p>
                   </div>
                   <Sparkles className="size-7 text-gold" />
                 </div>
-                <a href={createWhatsappUrl(product.name, product.price)} className="mt-5 flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-5 py-3 font-display font-black text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5">
+                <a href={createWhatsappUrl(product.name, product.price)} className="relative z-20 mt-5 flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-5 py-3 font-display font-black text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5">
                   Comprar <MessageCircle className="size-4" />
                 </a>
               </article>
