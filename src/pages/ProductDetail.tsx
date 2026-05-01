@@ -67,9 +67,12 @@ const ProductDetail = () => {
           >
             <ArrowLeft className="size-4" /> Catálogo
           </Link>
-          <div className="text-center font-display text-base font-black sm:text-xl">
-            DETALLE <span className="text-primary">PRODUCTO</span>
-          </div>
+          <Link to="/" className="flex items-center gap-2">
+            <img src={logoPartner} alt="Partner Licencias" width={40} height={40} className="size-10 object-contain" />
+            <span className="hidden font-display text-base font-black sm:inline sm:text-xl">
+              PARTNER <span className="text-primary">LICENCIAS</span>
+            </span>
+          </Link>
           <a
             href={whatsappUrl}
             className="inline-flex items-center gap-2 rounded-2xl bg-accent px-4 py-2 text-sm font-black text-accent-foreground shadow-whatsapp transition-transform hover:-translate-y-0.5"
