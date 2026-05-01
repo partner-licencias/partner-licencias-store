@@ -18,7 +18,9 @@ import {
   licenseCategories,
   type LicenseCategory,
 } from "@/data/catalog";
+import { getProductImage } from "@/data/categoryImages";
 import { createWhatsappUrl, slugifyProduct } from "@/lib/catalog";
+import logoPartner from "@/assets/logo-partner-licencias.png";
 import {
   Sheet,
   SheetContent,
