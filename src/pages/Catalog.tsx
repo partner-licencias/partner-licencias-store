@@ -143,8 +143,9 @@ const Catalog = () => {
           >
             <ArrowLeft className="size-4" /> <span className="hidden sm:inline">Inicio</span>
           </Link>
-          <div className="text-center font-display text-sm font-black sm:text-xl">
-            CATÁLOGO <span className="text-primary">PARTNER LICENCIAS</span>
+          <div className="text-center font-display text-sm font-black sm:text-xl flex items-center gap-2">
+            <img src={logoPartner} alt="Partner Licencias" className="size-9 sm:size-11 object-contain" width={44} height={44} />
+            <span className="hidden sm:inline">CATÁLOGO <span className="text-primary">PARTNER LICENCIAS</span></span>
           </div>
           <a
             href={createWhatsappUrl()}
