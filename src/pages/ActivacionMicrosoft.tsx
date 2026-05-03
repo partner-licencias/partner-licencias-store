@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { MessageCircle, ShieldCheck, Phone, AlertTriangle } from "lucide-react";
 import { createWhatsappUrl } from "@/lib/catalog";
 import logoPartner from "@/assets/logo-partner-licencias.png";
+import SocialLinks from "@/components/SocialLinks";
 
 const ActivacionMicrosoft = () => {
   return (
