@@ -70,7 +70,6 @@ const Index = () => {
           </a>
           <div className="hidden items-center gap-7 text-sm font-semibold text-muted-foreground md:flex">
             <Link className="transition-colors hover:text-foreground" to="/catalogo">Catálogo</Link>
-            <Link className="transition-colors hover:text-foreground" to="/activacion-microsoft">Activación MS</Link>
             <a className="transition-colors hover:text-foreground" href="#beneficios">Beneficios</a>
             <a className="transition-colors hover:text-foreground" href="#ofertas">Ofertas</a>
             <a className="transition-colors hover:text-foreground" href="#contacto">Contacto</a>
