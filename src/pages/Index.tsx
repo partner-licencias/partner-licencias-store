@@ -17,6 +17,7 @@ import { createWhatsappUrl, slugifyProduct } from "@/lib/catalog";
 import { catalogProducts, categoryIcons } from "@/data/catalog";
 import { getProductImage } from "@/data/categoryImages";
 import logoPartner from "@/assets/logo-partner-licencias.png";
+import SocialLinks from "@/components/SocialLinks";
 
 const featuredNames = [
   "Windows 11 Profesional OEM",
