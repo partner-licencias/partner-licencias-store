@@ -69,13 +69,15 @@ const Index = () => {
           </a>
           <div className="hidden items-center gap-7 text-sm font-semibold text-muted-foreground md:flex">
             <Link className="transition-colors hover:text-foreground" to="/catalogo">Catálogo</Link>
+            <Link className="transition-colors hover:text-foreground" to="/activacion-microsoft">Activación MS</Link>
             <a className="transition-colors hover:text-foreground" href="#beneficios">Beneficios</a>
             <a className="transition-colors hover:text-foreground" href="#ofertas">Ofertas</a>
             <a className="transition-colors hover:text-foreground" href="#contacto">Contacto</a>
           </div>
           <div className="flex items-center gap-2">
-            <Link to="/activacion-microsoft" className="hidden rounded-full bg-gold px-4 py-2.5 text-xs font-black text-background shadow-glow transition-transform duration-300 hover:-translate-y-0.5 lg:inline-flex">
-              Activación Microsoft · ID
+            <Link to="/activacion-microsoft" className="rounded-full bg-gold px-3 py-2 text-xs font-black text-background shadow-glow transition-transform duration-300 hover:-translate-y-0.5 sm:px-4 sm:text-sm">
+              <span className="hidden sm:inline">Activación Microsoft · ID</span>
+              <span className="sm:hidden">Activar MS</span>
             </Link>
             <a href={createWhatsappUrl()} className="hidden rounded-full bg-accent px-5 py-2.5 text-sm font-black text-accent-foreground shadow-whatsapp transition-transform duration-300 hover:-translate-y-0.5 sm:inline-flex">
               WhatsApp
