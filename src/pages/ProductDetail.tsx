@@ -13,6 +13,7 @@ import { catalogProducts, categoryIcons } from "@/data/catalog";
 import { getProductImage } from "@/data/categoryImages";
 import { createWhatsappUrl, slugifyProduct } from "@/lib/catalog";
 import logoPartner from "@/assets/logo-partner-licencias.png";
+import SocialLinks from "@/components/SocialLinks";
 
 const benefits = [
   "Entrega digital inmediata",
@@ -200,6 +201,14 @@ const ProductDetail = () => {
           </section>
         )}
       </main>
+
+      <footer className="border-t border-border bg-surface px-4 py-8 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 text-sm text-muted-foreground md:flex-row">
+          <p className="font-display font-black text-foreground">PARTNER <span className="text-primary">LICENCIAS</span> · Síguenos</p>
+          <SocialLinks />
+          <p>© 2026 Partner Licencias</p>
+        </div>
+      </footer>
     </div>
   );
 };

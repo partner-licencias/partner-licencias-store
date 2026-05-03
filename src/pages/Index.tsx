@@ -17,6 +17,7 @@ import { createWhatsappUrl, slugifyProduct } from "@/lib/catalog";
 import { catalogProducts, categoryIcons } from "@/data/catalog";
 import { getProductImage } from "@/data/categoryImages";
 import logoPartner from "@/assets/logo-partner-licencias.png";
+import SocialLinks from "@/components/SocialLinks";
 
 const featuredNames = [
   "Windows 11 Profesional OEM",
@@ -254,8 +255,11 @@ const Index = () => {
               <p>Licencias digitales, software, streaming y activaciones online.</p>
             </div>
           </div>
-          <div className="flex flex-wrap gap-3 font-semibold">
-            <span>WhatsApp</span><span>Instagram</span><span>TikTok</span><span>Visa</span><span>Mastercard</span><span>Transferencia</span>
+          <div className="flex flex-col items-start gap-3 md:items-center">
+            <SocialLinks />
+            <div className="flex flex-wrap gap-3 text-xs font-semibold uppercase tracking-wider">
+              <span>Visa</span><span>Mastercard</span><span>Transferencia</span>
+            </div>
           </div>
           <p>© 2026 Partner Licencias. Todos los derechos reservados.</p>
         </div>

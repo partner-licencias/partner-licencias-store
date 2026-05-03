@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { MessageCircle, ShieldCheck, Phone, AlertTriangle } from "lucide-react";
 import { createWhatsappUrl } from "@/lib/catalog";
 import logoPartner from "@/assets/logo-partner-licencias.png";
+import SocialLinks from "@/components/SocialLinks";
 
 const ActivacionMicrosoft = () => {
   return (
@@ -80,6 +81,14 @@ const ActivacionMicrosoft = () => {
           </div>
         </section>
       </main>
+
+      <footer className="border-t border-border bg-surface px-4 py-8 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 text-sm text-muted-foreground md:flex-row">
+          <p className="font-display font-black text-foreground">PARTNER <span className="text-primary">LICENCIAS</span> · Síguenos</p>
+          <SocialLinks />
+          <p>© 2026 Partner Licencias</p>
+        </div>
+      </footer>
 
       <a href={createWhatsappUrl()} aria-label="WhatsApp" className="fixed bottom-5 right-5 z-50 grid size-16 place-items-center rounded-full bg-accent text-accent-foreground shadow-whatsapp animate-pulse-glow">
         <MessageCircle className="size-8" />
