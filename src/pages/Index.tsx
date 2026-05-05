@@ -239,17 +239,24 @@ const Index = () => {
             <div className="grid gap-8 p-6 sm:p-8 lg:grid-cols-[1fr_0.8fr] lg:p-10">
               <div>
                 <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-hot px-4 py-2 text-sm font-black text-destructive-foreground">
-                  <Clock3 className="size-4" /> Oferta flash activa
+                  <Clock3 className="size-4" /> {ended ? "Promoción finalizada" : "Promoción 50% OFF activa"}
                 </div>
-                <h2 className="font-display text-4xl font-black sm:text-5xl">Combos digitales con descuento agresivo.</h2>
-                <p className="mt-4 max-w-2xl text-lg leading-8 text-muted-foreground">Arma tu pack de Windows + Office + Antivirus o solicita licencias para empresa con precio preferencial por volumen.</p>
+                <h2 className="font-display text-4xl font-black sm:text-5xl">50% de descuento en activaciones seleccionadas.</h2>
+                <p className="mt-4 max-w-2xl text-lg leading-8 text-muted-foreground">
+                  Aplica solo en: <strong className="text-foreground">Windows 10 / 11 PRO</strong>, <strong className="text-foreground">Office 365 Pro Plus</strong> y <strong className="text-foreground">Suite AutoDesk</strong>. Termina el <strong className="text-foreground">jueves 7 de mayo a las 15:00</strong>.
+                </p>
                 <a href={createWhatsappUrl()} className="mt-7 inline-flex rounded-2xl bg-cta-premium px-7 py-4 font-display font-black text-primary-foreground shadow-glow transition-transform duration-300 hover:-translate-y-1">Quiero mi descuento</a>
               </div>
-              <div className="grid grid-cols-3 gap-3 text-center sm:gap-4">
-                {["02", "14", "39"].map((time, index) => (
-                  <div key={time} className="rounded-2xl border border-border bg-background/60 p-4 sm:p-6">
-                    <div className="font-display text-4xl font-black text-primary sm:text-5xl">{time}</div>
-                    <div className="mt-1 text-xs font-black uppercase tracking-widest text-muted-foreground">{["horas", "min", "seg"][index]}</div>
+              <div className="grid grid-cols-4 gap-2 text-center sm:gap-4">
+                {[
+                  { value: pad(days), label: "días" },
+                  { value: pad(hours), label: "horas" },
+                  { value: pad(minutes), label: "min" },
+                  { value: pad(seconds), label: "seg" },
+                ].map(({ value, label }) => (
+                  <div key={label} className="rounded-2xl border border-border bg-background/60 p-3 sm:p-6">
+                    <div className="font-display text-3xl font-black text-primary sm:text-5xl">{value}</div>
+                    <div className="mt-1 text-xs font-black uppercase tracking-widest text-muted-foreground">{label}</div>
                   </div>
                 ))}
               </div>
