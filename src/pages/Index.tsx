@@ -15,6 +15,7 @@ import {
   Sparkles,
   Zap,
 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { createWhatsappUrl, slugifyProduct } from "@/lib/catalog";
 import { catalogProducts, categoryIcons } from "@/data/catalog";
@@ -63,7 +64,25 @@ const benefits = [
   { icon: LockKeyhole, title: "Activación protegida", text: "Software verificado para uso profesional." },
 ];
 
+const PROMO_DEADLINE = new Date("2026-05-07T15:00:00-05:00").getTime();
+
+const useCountdown = (target: number) => {
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
+  const diff = Math.max(0, target - now);
+  const days = Math.floor(diff / 86400000);
+  const hours = Math.floor((diff / 3600000) % 24);
+  const minutes = Math.floor((diff / 60000) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
+  return { days, hours, minutes, seconds, ended: diff === 0 };
+};
+
 const Index = () => {
+  const { days, hours, minutes, seconds, ended } = useCountdown(PROMO_DEADLINE);
+  const pad = (n: number) => n.toString().padStart(2, "0");
   return (
     <div className="min-h-screen overflow-hidden bg-background font-body text-foreground">
       <header className="sticky top-0 z-50 border-b border-border/70 bg-background/75 backdrop-blur-xl">
@@ -220,17 +239,24 @@ const Index = () => {
             <div className="grid gap-8 p-6 sm:p-8 lg:grid-cols-[1fr_0.8fr] lg:p-10">
               <div>
                 <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-hot px-4 py-2 text-sm font-black text-destructive-foreground">
-                  <Clock3 className="size-4" /> Oferta flash activa
+                  <Clock3 className="size-4" /> {ended ? "Promoción finalizada" : "Promoción 50% OFF activa"}
                 </div>
-                <h2 className="font-display text-4xl font-black sm:text-5xl">Combos digitales con descuento agresivo.</h2>
-                <p className="mt-4 max-w-2xl text-lg leading-8 text-muted-foreground">Arma tu pack de Windows + Office + Antivirus o solicita licencias para empresa con precio preferencial por volumen.</p>
+                <h2 className="font-display text-4xl font-black sm:text-5xl">50% de descuento en activaciones seleccionadas.</h2>
+                <p className="mt-4 max-w-2xl text-lg leading-8 text-muted-foreground">
+                  Aplica solo en: <strong className="text-foreground">Windows 10 / 11 PRO</strong>, <strong className="text-foreground">Office 365 Pro Plus</strong> y <strong className="text-foreground">Suite AutoDesk</strong>. Termina el <strong className="text-foreground">jueves 7 de mayo a las 15:00</strong>.
+                </p>
                 <a href={createWhatsappUrl()} className="mt-7 inline-flex rounded-2xl bg-cta-premium px-7 py-4 font-display font-black text-primary-foreground shadow-glow transition-transform duration-300 hover:-translate-y-1">Quiero mi descuento</a>
               </div>
-              <div className="grid grid-cols-3 gap-3 text-center sm:gap-4">
-                {["02", "14", "39"].map((time, index) => (
-                  <div key={time} className="rounded-2xl border border-border bg-background/60 p-4 sm:p-6">
-                    <div className="font-display text-4xl font-black text-primary sm:text-5xl">{time}</div>
-                    <div className="mt-1 text-xs font-black uppercase tracking-widest text-muted-foreground">{["horas", "min", "seg"][index]}</div>
+              <div className="grid grid-cols-4 gap-2 text-center sm:gap-4">
+                {[
+                  { value: pad(days), label: "días" },
+                  { value: pad(hours), label: "horas" },
+                  { value: pad(minutes), label: "min" },
+                  { value: pad(seconds), label: "seg" },
+                ].map(({ value, label }) => (
+                  <div key={label} className="rounded-2xl border border-border bg-background/60 p-3 sm:p-6">
+                    <div className="font-display text-3xl font-black text-primary sm:text-5xl">{value}</div>
+                    <div className="mt-1 text-xs font-black uppercase tracking-widest text-muted-foreground">{label}</div>
                   </div>
                 ))}
               </div>
