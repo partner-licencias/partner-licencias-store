@@ -18,6 +18,7 @@ import { catalogProducts, categoryIcons } from "@/data/catalog";
 import { getProductImage } from "@/data/categoryImages";
 import logoPartner from "@/assets/logo-partner-licencias.png";
 import SocialLinks from "@/components/SocialLinks";
+import FloatingChat from "@/components/FloatingChat";
 
 const featuredNames = [
   "Windows 11 Profesional OEM",

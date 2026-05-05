@@ -22,6 +22,7 @@ import { getProductImage } from "@/data/categoryImages";
 import { createWhatsappUrl, slugifyProduct } from "@/lib/catalog";
 import logoPartner from "@/assets/logo-partner-licencias.png";
 import SocialLinks from "@/components/SocialLinks";
+import FloatingChat from "@/components/FloatingChat";
 import {
   Sheet,
   SheetContent,

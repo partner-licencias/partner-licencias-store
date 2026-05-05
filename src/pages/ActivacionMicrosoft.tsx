@@ -3,6 +3,7 @@ import { MessageCircle, ShieldCheck, Phone, AlertTriangle } from "lucide-react";
 import { createWhatsappUrl } from "@/lib/catalog";
 import logoPartner from "@/assets/logo-partner-licencias.png";
 import SocialLinks from "@/components/SocialLinks";
+import FloatingChat from "@/components/FloatingChat";
 
 const ActivacionMicrosoft = () => {
   return (
