@@ -15,6 +15,7 @@ import {
   Sparkles,
   Zap,
 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { createWhatsappUrl, slugifyProduct } from "@/lib/catalog";
 import { catalogProducts, categoryIcons } from "@/data/catalog";
