@@ -383,13 +383,7 @@ const Catalog = () => {
         </div>
       </footer>
 
-      <a
-        href={createWhatsappUrl()}
-        aria-label="Comprar por WhatsApp"
-        className="fixed bottom-5 right-5 z-50 grid size-16 place-items-center rounded-full bg-accent text-accent-foreground shadow-whatsapp animate-pulse-glow transition-transform duration-300 hover:scale-110"
-      >
-        <MessageCircle className="size-8" />
-      </a>
+      <FloatingChat />
     </div>
   );
 };
