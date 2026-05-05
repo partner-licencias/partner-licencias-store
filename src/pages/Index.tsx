@@ -18,6 +18,7 @@ import { catalogProducts, categoryIcons } from "@/data/catalog";
 import { getProductImage } from "@/data/categoryImages";
 import logoPartner from "@/assets/logo-partner-licencias.png";
 import SocialLinks from "@/components/SocialLinks";
+import FloatingChat from "@/components/FloatingChat";
 
 const featuredNames = [
   "Windows 11 Profesional OEM",
@@ -264,9 +265,7 @@ const Index = () => {
         </div>
       </footer>
 
-      <a href={createWhatsappUrl()} aria-label="Comprar por WhatsApp" className="fixed bottom-5 right-5 z-50 grid size-16 place-items-center rounded-full bg-accent text-accent-foreground shadow-whatsapp animate-pulse-glow transition-transform duration-300 hover:scale-110">
-        <MessageCircle className="size-8" />
-      </a>
+      <FloatingChat />
     </div>
   );
 };

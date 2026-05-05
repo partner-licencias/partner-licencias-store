@@ -3,6 +3,7 @@ import { MessageCircle, ShieldCheck, Phone, AlertTriangle } from "lucide-react";
 import { createWhatsappUrl } from "@/lib/catalog";
 import logoPartner from "@/assets/logo-partner-licencias.png";
 import SocialLinks from "@/components/SocialLinks";
+import FloatingChat from "@/components/FloatingChat";
 
 const ActivacionMicrosoft = () => {
   return (
@@ -90,9 +91,7 @@ const ActivacionMicrosoft = () => {
         </div>
       </footer>
 
-      <a href={createWhatsappUrl()} aria-label="WhatsApp" className="fixed bottom-5 right-5 z-50 grid size-16 place-items-center rounded-full bg-accent text-accent-foreground shadow-whatsapp animate-pulse-glow">
-        <MessageCircle className="size-8" />
-      </a>
+      <FloatingChat />
     </div>
   );
 };
