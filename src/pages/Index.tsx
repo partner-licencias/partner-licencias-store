@@ -239,9 +239,24 @@ const Index = () => {
           <div className="mx-auto max-w-7xl rounded-[2.2rem] bg-cta-premium p-8 text-center text-primary-foreground shadow-glow sm:p-12">
             <h2 className="font-display text-4xl font-black sm:text-6xl">⚡ ACTIVA TU SOFTWARE HOY MISMO ⚡</h2>
             <p className="mx-auto mt-4 max-w-2xl text-lg font-semibold opacity-90">Escríbenos por WhatsApp, confirma disponibilidad y recibe tu licencia digital con soporte de activación.</p>
-            <a href={createWhatsappUrl()} className="mt-8 inline-flex items-center justify-center gap-3 rounded-2xl bg-background px-8 py-5 font-display text-lg font-black text-foreground shadow-whatsapp transition-transform duration-300 hover:-translate-y-1">
-              <MessageCircle className="size-6" /> Comprar por WhatsApp
-            </a>
+            <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+              <a href={createWhatsappUrl()} className="inline-flex items-center justify-center gap-2 rounded-2xl bg-background px-5 py-4 font-display text-base font-black text-foreground shadow-lg transition-transform duration-300 hover:-translate-y-1">
+                <MessageCircle className="size-5" /> Comprar por WhatsApp
+              </a>
+              <a href="https://t.me/PartnerLicencias" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[hsl(200_90%_50%)] px-5 py-4 font-display text-base font-black text-white shadow-lg transition-transform duration-300 hover:-translate-y-1">
+                <Send className="size-5" /> Comprar por Telegram
+              </a>
+              <a href="https://www.instagram.com/partner_licencias/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-tr from-[hsl(330_85%_55%)] via-[hsl(20_95%_55%)] to-[hsl(45_95%_60%)] px-5 py-4 font-display text-base font-black text-white shadow-lg transition-transform duration-300 hover:-translate-y-1">
+                <Instagram className="size-5" /> Comprar por Instagram
+              </a>
+              <a href="https://www.facebook.com/PartnerLicenciasOficial" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[hsl(220_85%_50%)] px-5 py-4 font-display text-base font-black text-white shadow-lg transition-transform duration-300 hover:-translate-y-1">
+                <Facebook className="size-5" /> Comprar por Facebook
+              </a>
+              <a href="https://www.tiktok.com/@partner_licencias" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-2xl bg-foreground px-5 py-4 font-display text-base font-black text-background shadow-lg transition-transform duration-300 hover:-translate-y-1">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="size-5"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43V8.66a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.84-.09Z"/></svg>
+                TikTok
+              </a>
+            </div>
           </div>
         </section>
       </main>
