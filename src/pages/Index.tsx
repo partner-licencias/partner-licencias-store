@@ -64,7 +64,25 @@ const benefits = [
   { icon: LockKeyhole, title: "Activación protegida", text: "Software verificado para uso profesional." },
 ];
 
+const PROMO_DEADLINE = new Date("2026-05-07T15:00:00-05:00").getTime();
+
+const useCountdown = (target: number) => {
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
+  const diff = Math.max(0, target - now);
+  const days = Math.floor(diff / 86400000);
+  const hours = Math.floor((diff / 3600000) % 24);
+  const minutes = Math.floor((diff / 60000) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
+  return { days, hours, minutes, seconds, ended: diff === 0 };
+};
+
 const Index = () => {
+  const { days, hours, minutes, seconds, ended } = useCountdown(PROMO_DEADLINE);
+  const pad = (n: number) => n.toString().padStart(2, "0");
   return (
     <div className="min-h-screen overflow-hidden bg-background font-body text-foreground">
       <header className="sticky top-0 z-50 border-b border-border/70 bg-background/75 backdrop-blur-xl">
